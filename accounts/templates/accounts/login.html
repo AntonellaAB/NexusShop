@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+    <h2>Iniciar Sesión</h2>
+    
+    <!-- Este formulario enviará los datos de usuario y contraseña al servidor -->
+    <form method="post">
+        <!-- csrf_token es una medida de seguridad obligatoria en Django para evitar ataques -->
+        {% csrf_token %}
+        
+        <!-- form.as_p le dice a Django que renderice los campos de usuario y clave automáticamente -->
+        {{ form.as_p }}
+        
+        <button type="submit">Ingresar</button>
+    </form>
+</body>
+</html>

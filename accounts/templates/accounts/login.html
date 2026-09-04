@@ -1,21 +1,46 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Iniciar Sesión</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusShop - Iniciar Sesión</title>
+    <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
 </head>
 <body>
-    <h2>Iniciar Sesión</h2>
-    
-    <!-- Este formulario enviará los datos de usuario y contraseña al servidor -->
-    <form method="post">
-        <!-- csrf_token es una medida de seguridad obligatoria en Django para evitar ataques -->
-        {% csrf_token %}
-        
-        <!-- form.as_p le dice a Django que renderice los campos de usuario y clave automáticamente -->
-        {{ form.as_p }}
-        
-        <button type="submit">Ingresar</button>
-    </form>
+
+    <div class="login-card">
+        <div class="login-header">
+            <h2>NexusShop</h2>
+            <p>Ingresa tus credenciales para acceder</p>
+        </div>
+
+        <!-- Si el usuario ya está autenticado, mostramos la alerta de bienvenida -->
+        {% if user.is_authenticated %}
+            <script>
+                alert("¡Bienvenido, {{ user.username }}!");
+            </script>
+            <p style="color: #34d399; text-align: center; font-weight: bold;">
+                Bienvenido, {{ user.username }}
+            </p>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_username">Usuario:</label>
+                {{ form.username }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_password">Contraseña:</label>
+                {{ form.password }}
+            </div>
+
+            <button type="submit" class="btn-submit">Ingresar</button>
+        </form>
+    </div>
+
 </body>
 </html>

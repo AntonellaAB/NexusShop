@@ -1,0 +1,421 @@
+/* =========================================================
+   SB METALÚRGICA — Hoja de estilos principal
+   Índice:
+   1. Variables y reset
+   2. Utilidades generales
+   3. Header
+   4. Hero (carrusel)
+   5. Categorías
+   6. Instalaciones
+   7. Banner de contacto (WhatsApp)
+   8. Footer
+   9. Páginas placeholder (login / carrito / productos / categoría)
+   10. Responsive
+   ========================================================= */
+
+/* ---------- 1. Variables y reset ---------- */
+:root{
+  --navy:#0a1730;
+  --navy-2:#0f2044;
+  --navy-3:#173562;
+  --gold:#f2b537;
+  --gold-2:#ffd166;
+  --gold-dim:#c98f1e;
+  --steel:#8a94a6;
+  --steel-light:#c7cdd8;
+  --paper:#f5f4f0;
+  --ink:#0d1626;
+  --sale:#d9573f;           /* color de badges de descuento */
+
+  --font-display:'Oswald', sans-serif;
+  --font-body:'Work Sans', sans-serif;
+
+  --container-width: 1200px;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+}
+h1,h2,h3,.display{
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+img{ max-width:100%; display:block; }
+a{ text-decoration:none; color:inherit; }
+ul{ list-style:none; }
+button{ font-family: inherit; cursor:pointer; }
+
+/* ---------- 2. Utilidades generales ---------- */
+.wrap{
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.icon{ width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.8; }
+
+/* ---------- 3. Header ---------- */
+header{
+  background:#fff;
+  border-bottom: 1px solid #e7e5df;
+  position: sticky;
+  top:0;
+  z-index: 50;
+}
+.header-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding: 12px 40px;
+  flex-wrap: wrap;
+}
+.logo{ display:flex; align-items:center; }
+.logo img{ height: 52px; width:auto; }
+
+.search-bar{
+  flex: 1 1 260px;
+  max-width: 400px;
+  display:flex;
+  align-items:center;
+  background: var(--paper);
+  border: 1px solid #e7e5df;
+  border-radius: 24px;
+  padding: 6px 16px;
+}
+.search-bar input{
+  border:none; background:transparent; outline:none; flex:1;
+  font-size:14px; font-family: var(--font-body);
+}
+.search-bar button{
+  border:none; background:transparent; color: var(--navy);
+  display:flex; align-items:center;
+}
+
+nav ul{ display:flex; gap:30px; font-size:14px; font-weight:600; color: var(--navy); }
+nav ul li a{ position:relative; padding-bottom:4px; }
+nav ul li a:hover{ color: var(--gold-dim); }
+
+.header-actions{ display:flex; align-items:center; gap:20px; }
+.btn-login{
+  display:flex; align-items:center; gap:8px;
+  background: var(--navy);
+  color:#fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight:600;
+  white-space:nowrap;
+}
+.btn-login:hover{ background: var(--navy-3); }
+.cart-link{ display:flex; align-items:center; color: var(--navy); position:relative; }
+.cart-link:hover{ color: var(--gold-dim); }
+
+/* ---------- 4. Hero (carrusel horizontal) ---------- */
+.hero{
+  position: relative;
+  background: var(--navy);
+}
+.hero-track{
+  display:flex;
+  overflow-x:auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.hero-track::-webkit-scrollbar{ display:none; }
+.hero-slide{
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  line-height:0;
+}
+.hero-slide img{ width:100%; height:auto; max-height:520px; object-fit:cover; }
+
+.hero-arrow{
+  position:absolute;
+  top:50%;
+  transform: translateY(-50%);
+  width:44px; height:44px;
+  border-radius:50%;
+  background: rgba(10,23,48,0.55);
+  border: 1px solid rgba(255,255,255,0.35);
+  color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  transition: background 0.2s ease;
+  z-index: 5;
+}
+.hero-arrow:hover{ background: rgba(10,23,48,0.85); }
+.hero-arrow.prev{ left:18px; }
+.hero-arrow.next{ right:18px; }
+
+.hero-dots{
+  position:absolute;
+  bottom:16px;
+  left:0; right:0;
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  z-index:5;
+}
+.hero-dots button{
+  width:9px; height:9px;
+  border-radius:50%;
+  border: 1px solid rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.25);
+  padding:0;
+}
+.hero-dots button.active{ background: var(--gold); border-color: var(--gold); }
+
+/* ---------- 5. Categorías ---------- */
+.categories{ padding: 60px 0 60px; }
+.section-heading{ text-align:center; margin-bottom: 40px; }
+.section-heading h2{ font-size: 32px; color: var(--navy); font-weight:600; }
+.section-heading .rule{ width: 60px; height: 3px; background: var(--gold); margin: 14px auto 0; }
+
+.cat-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.cat-row2{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 22px; }
+
+.cat-card{
+  position:relative;
+  border-radius: 8px;
+  overflow:hidden;
+  aspect-ratio: 1 / 1;
+  box-shadow: 0 4px 14px rgba(10,23,48,0.15);
+  display:block;
+}
+.cat-card img{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.cat-card:hover img{ transform: scale(1.06); }
+.cat-card::before{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(10,23,48,0) 45%, rgba(10,23,48,0.75) 100%);
+}
+.cat-card .label{
+  position:absolute; left:0; right:0; bottom:0;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+  color: var(--navy);
+  text-align:center;
+  padding: 10px 6px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+}
+
+.ver-mas{
+  display:flex; align-items:center; justify-content:center;
+  background: var(--navy);
+  color:#fff;
+  font-weight:600;
+  font-size: 14px;
+  border-radius: 8px;
+  aspect-ratio: 1/1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: var(--font-display);
+  transition: background 0.25s ease;
+}
+.ver-mas:hover{ background: var(--navy-3); }
+
+/* ---------- 5b. Franja de beneficios (inspirada en Ferremas) ---------- */
+.benefits{ background: var(--paper); padding: 26px 0 6px; }
+.benefits-box{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  background:#fff;
+  border-radius: 10px;
+  padding: 26px 34px;
+  box-shadow: 0 2px 10px rgba(10,23,48,0.07);
+}
+.benefit-item{
+  display:flex;
+  align-items:center;
+  gap: 16px;
+  flex: 1 1 220px;
+}
+.benefit-item .icon-wrap{
+  flex-shrink:0;
+  width:46px; height:46px;
+  display:flex; align-items:center; justify-content:center;
+  color: var(--navy);
+}
+.benefit-item .icon-wrap .icon{ width:30px; height:30px; stroke-width:1.6; }
+.benefit-item .benefit-title{
+  font-family: var(--font-body);
+  font-weight:700;
+  font-size: 14.5px;
+  color: var(--gold-dim);
+  text-transform:none;
+  letter-spacing:0;
+  margin-bottom: 2px;
+}
+.benefit-item p{ font-size: 12.5px; color:#555; line-height:1.4; }
+
+/* ---------- 5c. Productos destacados (inspirada en Tool Access) ---------- */
+.featured{ padding: 55px 0 65px; }
+.featured-grid{
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+.product-card{
+  background:#fff;
+  border: 1px solid #ece9e2;
+  border-radius: 8px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.product-card:hover{ box-shadow: 0 10px 22px rgba(10,23,48,0.12); transform: translateY(-2px); }
+.product-media{ position:relative; aspect-ratio: 1 / 1; background: var(--paper); }
+.product-media img{ width:100%; height:100%; object-fit: cover; }
+.product-badge{
+  position:absolute; top:10px; left:10px;
+  width:38px; height:38px;
+  border-radius:50%;
+  background: var(--sale);
+  color:#fff;
+  font-size: 12px;
+  font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+}
+.product-info{ padding: 16px 16px 0; display:flex; flex-direction:column; gap:6px; flex:1; }
+.product-eyebrow{
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--steel);
+}
+.product-title{
+  font-family: var(--font-body);
+  text-transform:none;
+  letter-spacing:0;
+  font-size: 14px;
+  font-weight:600;
+  color: var(--navy);
+  line-height:1.4;
+  min-height: 2.8em;
+}
+.product-price{ margin-top:auto; display:flex; align-items:baseline; gap:8px; padding-bottom: 4px; }
+.product-price .old{ font-size: 12.5px; color:#999; text-decoration: line-through; }
+.product-price .new{ font-size: 16px; font-weight:700; color: var(--navy); }
+.btn-add{
+  display:block;
+  margin: 12px 16px 16px;
+  background: var(--navy);
+  color:#fff;
+  border:none;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 13px;
+  font-weight:600;
+  text-align:center;
+}
+.btn-add:hover{ background: var(--navy-3); }
+
+.featured-more{ text-align:center; margin-top: 36px; }
+.featured-more a{
+  display:inline-block;
+  background: var(--navy);
+  color:#fff;
+  padding: 13px 30px;
+  border-radius: 24px;
+  font-weight:600;
+  font-size: 14px;
+}
+.featured-more a:hover{ background: var(--navy-3); }
+
+/* ---------- 5d. Banner de financiación (Itaú / Pik) ---------- */
+.financing{ padding: 0 0 55px; }
+.financing-box{
+  border-radius: 10px;
+  overflow:hidden;
+  box-shadow: 0 4px 14px rgba(10,23,48,0.1);
+  line-height: 0;
+}
+.financing-box img{ width:100%; height:auto; display:block; }
+
+/* ---------- 6. Instalaciones ---------- */
+.instalaciones{ background: var(--navy); padding: 60px 0; color:#fff; }
+.instalaciones-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items:center; }
+.instalaciones h2{ font-size: 30px; color:#fff; margin-bottom: 18px; }
+.instalaciones h2 span{ color: var(--gold); }
+.instalaciones p{ color: var(--steel-light); font-size: 15px; line-height: 1.7; margin-bottom: 14px; }
+.instalaciones-photo{ border-radius: 8px; overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+.instalaciones-photo img{ width:100%; height:100%; object-fit:cover; }
+
+/* ---------- 7. Banner de contacto ---------- */
+.banner{ background: var(--ink); color:#fff; padding: 36px 0; }
+.banner-inner{ display:flex; justify-content:space-between; align-items:center; gap: 30px; flex-wrap: wrap; }
+.banner-left h2{ font-size: 24px; font-weight: 600; color:#fff; margin-bottom: 6px; }
+.banner-left p{ font-size: 12px; color: var(--gold-2); letter-spacing: 1.5px; font-weight:600; }
+.banner-right{ display:flex; align-items:center; gap: 18px; max-width: 520px; }
+.banner-right p{ font-size: 15px; font-weight: 500; line-height: 1.4; }
+.whatsapp-circle{
+  flex-shrink:0; width: 48px; height: 48px; border-radius: 50%;
+  background: #25d366; display:flex; align-items:center; justify-content:center;
+  color:#fff;
+}
+.whatsapp-circle .icon{ stroke:none; fill:currentColor; width:22px; height:22px; }
+
+/* ---------- 8. Footer ---------- */
+footer{ background:#fff; padding: 44px 0; border-top: 1px solid #e7e5df; }
+.footer-inner{ display:flex; flex-wrap: wrap; gap: 30px; justify-content:space-between; }
+.footer-logo img{ height: 60px; width:auto; }
+.footer-col h4{
+  font-size: 13px; color: var(--navy); font-weight: 700; margin-bottom: 10px;
+  font-family: var(--font-display); letter-spacing: 0.5px;
+}
+.footer-col p{ font-size: 13px; color: #444; line-height: 1.7; }
+
+/* ---------- 9. Páginas placeholder ---------- */
+.stub-hero{
+  background: linear-gradient(180deg, rgba(10,23,48,0.85), rgba(10,23,48,0.85));
+  background-size: cover;
+  background-position: center;
+  padding: 70px 0;
+  color:#fff;
+  text-align:center;
+}
+.stub-hero h1{ font-size: 34px; margin-bottom: 10px; }
+.stub-hero p{ color: var(--steel-light); font-size:14px; letter-spacing:1px; }
+.stub-body{ padding: 60px 0; text-align:center; }
+.stub-body p{ max-width:560px; margin: 0 auto 26px; color:#444; line-height:1.7; font-size:15px; }
+.btn-volver{
+  display:inline-flex; align-items:center; gap:8px;
+  background: var(--navy); color:#fff; padding: 12px 26px;
+  border-radius: 4px; font-weight:600; font-size:14px;
+}
+.btn-volver:hover{ background: var(--navy-3); }
+
+/* ---------- 10. Responsive ---------- */
+@media (max-width: 1024px){
+  .featured-grid{ grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px){
+  .cat-grid, .cat-row2{ grid-template-columns: repeat(2, 1fr); }
+  .instalaciones-grid{ grid-template-columns: 1fr; }
+  .header-inner{ padding: 12px 20px; }
+  .wrap{ padding-left:20px; padding-right:20px; }
+}
+@media (max-width: 640px){
+  .featured-grid{ grid-template-columns: repeat(2, 1fr); }
+  .benefits-box{ flex-direction:column; }
+}
+@media (max-width: 560px){
+  nav{ order:3; width:100%; }
+  nav ul{ justify-content:center; gap:18px; }
+  .search-bar{ order:2; }
+  .cat-grid, .cat-row2{ grid-template-columns: repeat(2, 1fr); }
+  .hero-arrow{ width:36px; height:36px; }
+}

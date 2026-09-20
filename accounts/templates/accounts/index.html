@@ -1,58 +1,17 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SJB Metalúrgica</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+{% extends 'accounts/base.html' %}
+{% load static %}
 
-  <!-- ===== HEADER ===== -->
+{% block title %}Inicio - SJB Metalúrgica{% endblock %}
 
-  <header>
-    <div class="header-inner">
-      <a class="logo" href="index.html"><img src="img/logo.png" alt="SJB Metalúrgica"></a>
-
-      <form class="search-bar" action="productos.html" method="get">
-        <input type="text" name="q" placeholder="Buscar">
-        <button type="submit" aria-label="Buscar">
-          <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </button>
-      </form>
-
-      <nav>
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="productos.html">Productos</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
-        </ul>
-      </nav>
-
-      <div class="header-actions">
-        <a href="login.html" class="btn-login">
-          <svg class="icon" viewBox="0 0 24 24" width="16" height="16"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          Iniciar Sesión
-        </a>
-        <a href="carrito.html" class="cart-link" aria-label="Carrito">
-          <svg class="icon" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-        </a>
-      </div>
-    </div>
-  </header>
-
-  <!-- ===== HERO: carrusel horizontal =====
-       Slide 1 (visible por defecto): "Construyendo un futuro"
-       Slide 2 (scroll a la derecha): "Compra online, recibe donde trabajas" -->
+{% block content %}
+  <!-- ===== HERO: carrusel horizontal ===== -->
   <section class="hero">
     <div class="hero-track">
       <div class="hero-slide">
-        <img src="img/hero-construyendo.png" alt="Construyendo un futuro">
+        <img src="{% static 'accounts/img/hero-construyendo.png' %}" alt="Construyendo un futuro">
       </div>
       <div class="hero-slide">
-        <img src="img/hero-compra-online.png" alt="Compra online, recibe donde trabajas">
+        <img src="{% static 'accounts/img/hero-compra-online.png' %}" alt="Compra online, recibe donde trabajas">
       </div>
     </div>
     <button class="hero-arrow prev" aria-label="Diapositiva anterior">
@@ -64,7 +23,7 @@
     <div class="hero-dots"></div>
   </section>
 
-  <!-- ===== FRANJA DE BENEFICIOS =====  -->
+  <!-- ===== FRANJA DE BENEFICIOS ===== -->
   <section class="benefits">
     <div class="wrap">
       <div class="benefits-box">
@@ -108,38 +67,19 @@
       </div>
 
       <div class="cat-grid">
-        <a class="cat-card" href="categoria-limpieza.html">
-          <img src="img/limpieza.png" alt="Limpieza">
-          <span class="label">Limpieza</span>
-        </a>
-        <a class="cat-card" href="categoria-discos.html">
-          <img src="img/discos.png" alt="Discos">
-          <span class="label">Discos</span>
-        </a>
-        <a class="cat-card" href="categoria-cintas.html">
-          <img src="img/cintas.png" alt="Cintas">
-          <span class="label">Cintas</span>
-        </a>
-        <a class="cat-card" href="categoria-tubos.html">
-          <img src="img/tubos.png" alt="Tubos">
-          <span class="label">Tubos</span>
-        </a>
-      </div>
-
-      <div class="cat-row2">
-        <a class="cat-card" href="categoria-chapas.html">
-          <img src="img/chapas.jpg" alt="Chapas">
-          <span class="label">Chapas</span>
-        </a>
-        <a class="cat-card" href="categoria-electrodos.html">
-          <img src="img/electrodos.png" alt="Electrodos">
-          <span class="label">Electrodos</span>
-        </a>
-        <a class="cat-card" href="categoria-herramientas.html">
-          <img src="img/herramientas.jpg" alt="Herramientas">
-          <span class="label">Herramientas</span>
-        </a>
-        <a href="productos.html" class="ver-mas">Ver más</a>
+        {% for categoria in categorias %}
+          <a class="cat-card" href="#">
+            {% if categoria.imagen %}
+              <img src="{{ categoria.imagen.url }}" alt="{{ categoria.nombre }}">
+            {% else %}
+              <img src="{% static 'accounts/img/limpieza.png' %}" alt="{{ categoria.nombre }}">
+            {% endif %}
+            <span class="label">{{ categoria.nombre }}</span>
+          </a>
+        {% empty %}
+          <!-- Muestra esto si aún no hay categorías cargadas en la BD -->
+          <p>No hay categorías disponibles.</p>
+        {% endfor %}
       </div>
     </div>
   </section>
@@ -153,140 +93,27 @@
       </div>
 
       <div class="featured-grid">
-        <div class="product-card">
-          <div class="product-media">
-            <img src="img/herramientas.jpg" alt="Kit de herramientas manuales">
+        {% for producto in productos_destacados %}
+          <div class="product-card">
+            <div class="product-media">
+              {% if producto.imagen %}
+                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+              {% else %}
+                <img src="{% static 'accounts/img/herramientas.jpg' %}" alt="{{ producto.nombre }}">
+              {% endif %}
+            </div>
+            <div class="product-info">
+              <p class="product-eyebrow">{{ producto.categoria.nombre }}</p>
+              <p class="product-title">{{ producto.nombre }}</p>
+              <div class="product-price"><span class="new">₲ {{ producto.precio }}</span></div>
+            </div>
+            <a class="btn-add" href="#">Añadir al carrito</a>
           </div>
-          <div class="product-info">
-            <p class="product-eyebrow">Herramienta manual</p>
-            <p class="product-title">Kit de herramientas manuales Truper, 6 piezas</p>
-            <div class="product-price"><span class="new">₲ 285.000</span></div>
-          </div>
-          <a class="btn-add" href="carrito.html">Añadir al carrito</a>
-        </div>
-
-        <div class="product-card">
-          <div class="product-media">
-            <span class="product-badge">-10%</span>
-            <img src="img/discos.png" alt="Disco de corte para amoladora">
-          </div>
-          <div class="product-info">
-            <p class="product-eyebrow">Discos</p>
-            <p class="product-title">Disco de corte para amoladora 4 1/2"</p>
-            <div class="product-price"><span class="old">₲ 20.500</span><span class="new">₲ 18.500</span></div>
-          </div>
-          <a class="btn-add" href="carrito.html">Añadir al carrito</a>
-        </div>
-
-        <div class="product-card">
-          <div class="product-media">
-            <img src="img/electrodos.png" alt="Electrodo revestido E6013">
-          </div>
-          <div class="product-info">
-            <p class="product-eyebrow">Electrodos</p>
-            <p class="product-title">Electrodo revestido E6013, caja x kg</p>
-            <div class="product-price"><span class="new">₲ 32.000</span></div>
-          </div>
-          <a class="btn-add" href="carrito.html">Añadir al carrito</a>
-        </div>
-
-        <div class="product-card">
-          <div class="product-media">
-            <img src="img/tubos.png" alt="Caño redondo de hierro">
-          </div>
-          <div class="product-info">
-            <p class="product-eyebrow">Tubos</p>
-            <p class="product-title">Caño redondo de hierro 1 pulgada, 6 m</p>
-            <div class="product-price"><span class="new">₲ 65.000</span></div>
-          </div>
-          <a class="btn-add" href="carrito.html">Añadir al carrito</a>
-        </div>
-
-        <div class="product-card">
-          <div class="product-media">
-            <span class="product-badge">-5%</span>
-            <img src="img/chapas.jpg" alt="Chapa lisa calibre 18">
-          </div>
-          <div class="product-info">
-            <p class="product-eyebrow">Chapas</p>
-            <p class="product-title">Chapa lisa calibre 18, 1,20 x 2,40 m</p>
-            <div class="product-price"><span class="old">₲ 220.000</span><span class="new">₲ 209.000</span></div>
-          </div>
-          <a class="btn-add" href="carrito.html">Añadir al carrito</a>
-        </div>
-      </div>
-
-      <div class="featured-more">
-        <a href="productos.html">Ver más productos</a>
+        {% empty %}
+          <!-- Muestra esto si aún no hay productos en la BD -->
+          <p>Cargando productos destacados...</p>
+        {% endfor %}
       </div>
     </div>
   </section>
-
-  <!-- ===== BANNER DE FINANCIACIÓN (Itaú / Pik) ===== -->
-  <section class="financing">
-    <div class="wrap">
-      <div class="financing-box">
-        <img src="img/financiacion-itau-pik.png" alt="Hasta 6 cuotas sin interés con tarjetas de crédito o QR Itaú">
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== INSTALACIONES ===== -->
-  <section class="instalaciones">
-    <div class="wrap">
-      <div class="instalaciones-grid">
-        <div>
-          <h2>Nuestras <span>instalaciones</span></h2>
-          <p>Contamos con un depósito propio en Asunción, preparado para atender pedidos de chapas, tubos, herramientas y más.</p>
-          <p>Te esperamos de lunes a sábado.</p>
-        </div>
-        <div class="instalaciones-photo">
-          <img src="img/instalaciones.png" alt="Depósito SJB Metalúrgica">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== BANNER DE CONTACTO ===== -->
-  <section class="banner">
-    <div class="wrap banner-inner">
-      <div class="banner-left">
-        <h2>Los materiales que necesitas</h2>
-        <p>EN UN SOLO LUGAR</p>
-      </div>
-      <div class="banner-right">
-        <p>¿No encuentras lo que buscas?<br>Escríbenos por WhatsApp, ¡te ayudamos a encontrarlo!</p>
-        <a class="whatsapp-circle" href="https://wa.me/595982120554" aria-label="WhatsApp" target="_blank" rel="noopener">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M20.5 3.5A11 11 0 0 0 3.6 17.4L2 22l4.7-1.5A11 11 0 1 0 20.5 3.5Zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-3 1 1-2.9-.2-.3A9 9 0 1 1 12 20.5Zm4.9-6.7c-.3-.1-1.6-.8-1.8-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.3-.1-1.1-.4-2.1-1.3-.8-.7-1.3-1.6-1.5-1.8-.1-.2 0-.4.1-.5l.4-.5c.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5l-.8-2c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-1 1-1 2.3 0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.6-.7 1.9-1.3.2-.6.2-1.1.2-1.3-.1-.1-.3-.2-.6-.3Z"/></svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== FOOTER ===== -->
-  <footer>
-    <div class="wrap footer-inner">
-      <div class="footer-logo">
-        <img src="img/logo.png" alt="SB Metalúrgica">
-      </div>
-
-      <div class="footer-col">
-        <h4>Horario de atención</h4>
-        <p>Lunes a Viernes<br>07:30 a 17:00 hs.<br>Sábado<br>07:30 a 12:00 hs.</p>
-      </div>
-
-      <div class="footer-col">
-        <h4>Dirección</h4>
-        <p>Médicos del chaco<br>esquina Guaraníes<br>Asunción - Paraguay</p>
-      </div>
-
-      <div class="footer-col">
-        <h4>Teléfonos</h4>
-        <p>0982 120 554<br>0981 434 629<br>0984 533 234</p>
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/main.js"></script>
-</body>
-</html>
+{% endblock %}

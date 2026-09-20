@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SJB Metalúrgica{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="header-inner">
+      <a class="logo" href="{% url 'home' %}"><img src="{% static 'accounts/img/logo.png' %}" alt="SJB Metalúrgica"></a>
+
+      <form class="search-bar" action="#" method="get">
+        <input type="text" name="q" placeholder="Buscar">
+        <button type="submit" aria-label="Buscar">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </form>
+
+      <nav>
+        <ul>
+          <li><a href="{% url 'home' %}">Inicio</a></li>
+          <li><a href="#">Productos</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        {% if user.is_authenticated %}
+          <span class="user-name">Hola, {{ user.username }}</span>
+          <a href="#" class="btn-login">Cerrar Sesión</a>
+        {% else %}
+          <a href="#" class="btn-login">
+            <svg class="icon" viewBox="0 0 24 24" width="16" height="16"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Iniciar Sesión
+          </a>
+        {% endif %}
+
+        <a href="#" class="cart-link" aria-label="Carrito">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- BLOQUE PRINCIPAL DINÁMICO -->
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-logo">
+        <img src="{% static 'accounts/img/logo.png' %}" alt="SB Metalúrgica">
+      </div>
+
+      <div class="footer-col">
+        <h4>Horario de atención</h4>
+        <p>Lunes a Viernes<br>07:30 a 17:00 hs.<br>Sábado<br>07:30 a 12:00 hs.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Dirección</h4>
+        <p>Médicos del chaco<br>esquina Guaraníes<br>Asunción - Paraguay</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Teléfonos</h4>
+        <p>0982 120 554<br>0981 434 629<br>0984 533 234</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'accounts/js/main.js' %}"></script>
+</body>
+</html>

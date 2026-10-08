@@ -18,3 +18,11 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f"{self.username} - ({self.get_role_display()})"
+
+    @property
+    def es_vendedor(self):
+        return self.role == 'VENDEDOR'
+
+    @property
+    def es_cliente(self):
+        return self.role == 'CLIENTE'

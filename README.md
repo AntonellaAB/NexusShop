@@ -25,7 +25,7 @@ Sigue estos pasos la primera vez que descargues el proyecto en tu computadora.
 Abre tu terminal (PowerShell, Git Bash o Terminal de VS Code) en la carpeta donde guardas tus proyectos y ejecuta:
 
 ```bash
-git clone [https://github.com/TU_USUARIO/nexusShop.git](https://github.com/TU_USUARIO/nexusShop.git)
+git clone [https://github.com/AntonellaAB/NexusShop.git](https://github.com/AntonellaAB/NexusShop.git)
 cd nexusShop 
 ```
 

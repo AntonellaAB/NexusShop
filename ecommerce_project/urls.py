@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),  # La comilla vacía '' representa el Home (http://127.0.0.1:8000/)
     path('cuentas/', include('accounts.urls')),
+    path('products/', include('products.urls')),
 ]

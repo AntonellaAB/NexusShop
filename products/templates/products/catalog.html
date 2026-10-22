@@ -1,0 +1,59 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block title %}Catálogo · SJB Metalúrgica{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'products/css/catalog.css' %}">
+<section class="catalog">
+  <div class="wrap">
+    <h1>Catálogo</h1>
+
+    <div class="catalog-layout">
+
+      <aside class="catalog-filters">
+        <h2>Categorías</h2>
+        <ul>
+          {# TODO: href con la url del filtro por categoría (la define Fabri) #}
+          <li><a href="#">Todas</a></li>
+          {% for category in categories %}
+            <li><a href="#">{{ category.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </aside>
+
+      <div class="product-grid">
+        {% for product in products %}
+          <article class="product-card">
+            {# TODO: href="#" -> url del detalle del producto #}
+            <a class="product-card__img" href="#">
+              {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+              {% else %}
+                <div class="product-card__noimg">Sin imagen</div>
+              {% endif %}
+            </a>
+            <div class="product-card__body">
+              <h3>{{ product.name }}</h3>
+              <p class="price">Gs. {{ product.price|floatformat:0 }}</p>
+
+              {% if product.stock > 0 %}
+                {# TODO: action="#" -> url de agregar al carrito (la define Vicente) #}
+                <form method="post" action="#">
+                  {% csrf_token %}
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" class="btn">Agregar al carrito</button>
+                </form>
+              {% else %}
+                <p class="out-of-stock">Sin stock</p>
+              {% endif %}
+            </div>
+          </article>
+        {% empty %}
+          <p class="empty">Todavía no hay productos cargados.</p>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

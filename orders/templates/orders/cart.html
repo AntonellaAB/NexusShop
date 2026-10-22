@@ -1,0 +1,57 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block title %}Carrito · SJB Metalúrgica{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'products/css/catalog.css' %}">
+<section class="cart">
+  <div class="wrap">
+    <h1>Tu carrito</h1>
+
+    {% if items %}
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+            <tr>
+              <td>{{ item.product.name }}</td>
+              <td>Gs. {{ item.product.price|floatformat:0 }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>Gs. {{ item.subtotal|floatformat:0 }}</td>
+              <td>
+                {# TODO: action="#" -> url de quitar del carrito (Vicente) #}
+                <form method="post" action="#">
+                  {% csrf_token %}
+                  <button type="submit" class="btn-link">Quitar</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="cart-summary">
+        <p class="cart-total">Total: <strong>Gs. {{ total|floatformat:0 }}</strong></p>
+        {# TODO: action="#" -> url del proceso de pago (Vicente) #}
+        <form method="post" action="#">
+          {% csrf_token %}
+          <button type="submit" class="btn">Finalizar compra</button>
+        </form>
+      </div>
+
+    {% else %}
+      <p class="empty">Tu carrito está vacío.</p>
+      {# TODO: href="#" -> url del catálogo #}
+      <a class="btn" href="#">Ver el catálogo</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

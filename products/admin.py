@@ -1,15 +1,15 @@
 from django.contrib import admin
-from .models import Category, Product
-
-# Register your models here.
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
+from .models import Categoria, Producto
 
 
-@admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'seller', 'category', 'price', 'stock')
-    list_filter = ('category', 'seller')
-    search_fields = ('name', 'description')
+@admin.register(Categoria)
+class CategoriaAdmin(admin.ModelAdmin):
+    list_display = ('nombre',)
+    search_fields = ('nombre',)
+
+
+@admin.register(Producto)
+class ProductoAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'vendedor', 'categoria', 'precio', 'existencias')
+    list_filter = ('categoria', 'vendedor')
+    search_fields = ('nombre', 'descripcion')

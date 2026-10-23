@@ -1,6 +1,6 @@
 {% extends "accounts/base.html" %}
 {% load static %}
-{% block title %}{{ product.name }} · SB Metalúrgica{% endblock %}
+{% block title %}{{ producto.nombre }} · SB Metalúrgica{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'products/css/catalog.css' %}">
@@ -12,31 +12,31 @@
 
     <div class="product-detail__layout">
       <div class="product-detail__img">
-        {% if product.image %}
-          <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% if producto.imagen %}
+          <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
         {% else %}
           <div class="product-card__noimg">Sin imagen</div>
         {% endif %}
       </div>
 
       <div class="product-detail__info">
-        <h1>{{ product.name }}</h1>
+        <h1>{{ producto.nombre }}</h1>
         <p class="product-detail__meta">
-          {% if product.category %}{{ product.category.name }} · {% endif %}Vendido por {{ product.seller }}
+          {% if producto.categoria %}{{ producto.categoria.nombre }} · {% endif %}Vendido por {{ producto.vendedor }}
         </p>
-        <p class="price price--big">Gs. {{ product.price|floatformat:0 }}</p>
+        <p class="price price--big">Gs. {{ producto.precio|floatformat:"0g" }}</p>
 
-        {% if product.description %}
-          <div class="product-detail__desc">{{ product.description|linebreaks }}</div>
+        {% if producto.descripcion %}
+          <div class="product-detail__desc">{{ producto.descripcion|linebreaks }}</div>
         {% endif %}
 
-        {% if product.stock > 0 %}
-          <p class="stock">{{ product.stock }} disponibles</p>
+        {% if producto.existencias > 0 %}
+          <p class="stock">{{ producto.existencias }} disponibles</p>
           {# TODO: action="#" -> url de agregar al carrito (la define Vicente) #}
           <form method="post" action="#" class="add-form">
             {% csrf_token %}
             <label for="quantity">Cantidad</label>
-            <input id="quantity" type="number" name="quantity" value="1" min="1" max="{{ product.stock }}">
+            <input id="quantity" type="number" name="quantity" value="1" min="1" max="{{ producto.existencias }}">
             <button type="submit" class="btn">Agregar al carrito</button>
           </form>
         {% else %}

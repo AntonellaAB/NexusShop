@@ -8,7 +8,7 @@
   <div class="wrap">
     <h1>Tu carrito</h1>
 
-    {% if items %}
+    {% if cart|length %}
       <table class="cart-table">
         <thead>
           <tr>
@@ -20,14 +20,14 @@
           </tr>
         </thead>
         <tbody>
-          {% for item in items %}
+          {% for item in cart %}
             <tr>
-              <td>{{ item.product.name }}</td>
-              <td>Gs. {{ item.product.price|floatformat:0 }}</td>
+              <td>{{ item.product.nombre }}</td>
+              <td>Gs. {{ item.price|floatformat:"0g" }}</td>
               <td>{{ item.quantity }}</td>
-              <td>Gs. {{ item.subtotal|floatformat:0 }}</td>
+              <td>Gs. {{ item.total_price|floatformat:"0g" }}</td>
               <td>
-                {# TODO: action="#" -> url de quitar del carrito (Vicente) #}
+                {# TODO: action="#" -> url de quitar del carrito; el id del producto es item.product.id (Vicente) #}
                 <form method="post" action="#">
                   {% csrf_token %}
                   <button type="submit" class="btn-link">Quitar</button>
@@ -39,12 +39,9 @@
       </table>
 
       <div class="cart-summary">
-        <p class="cart-total">Total: <strong>Gs. {{ total|floatformat:0 }}</strong></p>
-        {# TODO: action="#" -> url del proceso de pago (Vicente) #}
-        <form method="post" action="#">
-          {% csrf_token %}
-          <button type="submit" class="btn">Finalizar compra</button>
-        </form>
+        <p class="cart-total">Total: <strong>Gs. {{ cart.get_total_price|floatformat:"0g" }}</strong></p>
+        {# TODO: href="#" -> url de order_create (formulario de envío y pago) #}
+        <a class="btn" href="#">Finalizar compra</a>
       </div>
 
     {% else %}

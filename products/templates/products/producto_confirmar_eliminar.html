@@ -6,11 +6,11 @@
 <section class="wrap">
 <h1>¿Eliminar "{{ producto.nombre }}"?</h1>
 <p>Esta acción no se puede deshacer.</p>
-
+<a href="{% url 'seller_dashboard' %}">← Volver al panel</a>
 <form method="post">
     {% csrf_token %}
     <button type="submit" class="btn-login">Sí, eliminar</button>
-    <a href="{% url 'mis_productos' %}">Cancelar</a>
+    <a href="{% url 'seller_dashboard' %}">Cancelar</a>
 </form>
 </section>
 {% endblock %}

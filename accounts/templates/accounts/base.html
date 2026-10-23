@@ -27,10 +27,13 @@
         <ul>
           <li><a href="{% url 'home' %}">Inicio</a></li>
           <li><a href="{% url 'catalogo' %}">Productos</a></li>
+          {% if user.is_authenticated and user.es_vendedor %}
+          <li><a href="{% url 'seller_dashboard' %}">Panel de vendedor</a></li>
+          {% endif %}
           <li><a href="#">Contacto</a></li>
         </ul>
       </nav>
-
+      
       <div class="header-actions">
         {% if user.is_authenticated %}
           <span class="user-name">Hola, {{ user.first_name|default:user.username }}</span>

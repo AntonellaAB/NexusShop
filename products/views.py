@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.db.models import Sum
 from accounts.decorators import vendedor_required
 from .forms import ProductoForm, StockForm
 from .models import Categoria, Producto
@@ -82,9 +82,14 @@ def producto_detalle(request, pk):
 
 @vendedor_required
 def seller_dashboard(request):
-    productos = Producto.objects.filter(vendedor=request.user)
-    return render(request, 'products/seller/dashboard.html', {'productos': productos})
-
+    productos = Producto.objects.filter(vendedor=request.user).select_related('categoria')
+    contexto = {
+        'productos': productos,
+        'total_productos': productos.count(),
+        'total_unidades': productos.aggregate(total=Sum('existencias'))['total'] or 0,
+        'sin_stock': productos.filter(existencias=0).count(),
+    }
+    return render(request, 'products/seller/dashboard.html', contexto)
 
 @vendedor_required
 def producto_stock(request, pk):

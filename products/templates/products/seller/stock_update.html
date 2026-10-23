@@ -7,7 +7,7 @@
 <section class="seller-page">
   <div class="wrap">
     {# TODO: reemplazar el href fijo por la url del panel (Giova) #}
-    <a class="seller-back" href="/products/seller/dashboard/">← Volver al panel</a>
+    <a class="seller-back" href="{% url 'seller_dashboard' %}">← Volver al panel</a>
     <h1>Actualizar stock</h1>
 
     <div class="seller-card">
@@ -22,7 +22,7 @@
         {{ form.existencias.errors }}
         <div class="seller-actions">
           <button type="submit" class="seller-btn">Guardar stock</button>
-          <a class="seller-btn seller-btn--ghost" href="/products/seller/dashboard/">Cancelar</a>
+          <a class="seller-btn seller-btn--ghost" href="{% url 'seller_dashboard' %}">Cancelar</a>
         </div>
       </form>
     </div>

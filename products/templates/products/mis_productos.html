@@ -1,0 +1,31 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Mis productos - NexusShop{% endblock %}
+
+{% block content %}
+<section class="wrap">
+<h1>Mis productos</h1>
+<a href="{% url 'producto_crear' %}" class="btn-login">Nuevo producto</a>
+
+<table>
+    <tr>
+    <th>Imagen</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Existencias</th><th>Acciones</th>
+    </tr>
+    {% for p in productos %}
+    <tr>
+    <td>{% if p.imagen %}<img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" width="60">{% endif %}</td>
+    <td>{{ p.nombre }}</td>
+    <td>{{ p.categoria.nombre|default:"Sin categoría" }}</td>
+    <td>₲ {{ p.precio }}</td>
+    <td>{{ p.existencias }}</td>
+    <td>
+        <a href="{% url 'producto_editar' p.pk %}">Editar</a> |
+        <a href="{% url 'producto_eliminar' p.pk %}">Eliminar</a>
+    </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6">Todavía no publicaste productos.</td></tr>
+    {% endfor %}
+</table>
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}{{ titulo }} - NexusShop{% endblock %}
+
+{% block content %}
+<section class="wrap">
+<h1>{{ titulo }}</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn-login">Guardar</button>
+    <a href="{% url 'mis_productos' %}">Cancelar</a>
+</form>
+</section>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.db.models import Sum
 from accounts.decorators import vendedor_required
-from .forms import ProductoForm
+from .forms import ProductoForm, StockForm
 from .models import Categoria, Producto
 
 # Create your views here.
@@ -75,3 +75,30 @@ def catalogo(request):
 def producto_detalle(request, pk):
     producto = get_object_or_404(Producto, pk=pk)
     return render(request, 'products/product_detail.html', {'producto': producto})
+
+
+
+# ---------- PANEL DEL VENDEDOR ----------
+
+@vendedor_required
+def seller_dashboard(request):
+    productos = Producto.objects.filter(vendedor=request.user).select_related('categoria')
+    contexto = {
+        'productos': productos,
+        'total_productos': productos.count(),
+        'total_unidades': productos.aggregate(total=Sum('existencias'))['total'] or 0,
+        'sin_stock': productos.filter(existencias=0).count(),
+    }
+    return render(request, 'products/seller/dashboard.html', contexto)
+
+@vendedor_required
+def producto_stock(request, pk):
+    producto = get_object_or_404(Producto, pk=pk, vendedor=request.user)
+    if request.method == 'POST':
+        form = StockForm(request.POST, instance=producto)
+        if form.is_valid():
+            form.save()
+            return redirect('seller_dashboard')
+    else:
+        form = StockForm(instance=producto)
+    return render(request, 'products/seller/stock_update.html', {'form': form, 'producto': producto})

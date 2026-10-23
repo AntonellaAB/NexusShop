@@ -7,7 +7,7 @@
 <section class="seller-page">
   <div class="wrap">
     {# TODO: reemplazar el href fijo por la url del panel (Giova) #}
-    <a class="seller-back" href="/products/seller/dashboard/">← Volver al panel</a>
+    <a class="seller-back" href="{% url 'seller_dashboard' %}">← Volver al panel</a>
     <h1>Resumen de ventas</h1>
 
     {# El período viaja por GET (?periodo=dia|semana|mes); la vista filtra los pedidos con ese valor #}

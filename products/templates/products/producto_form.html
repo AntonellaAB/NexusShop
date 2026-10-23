@@ -5,12 +5,12 @@
 {% block content %}
 <section class="wrap">
 <h1>{{ titulo }}</h1>
-
+<a href="{% url 'seller_dashboard' %}">← Volver al panel</a>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn-login">Guardar</button>
-    <a href="{% url 'mis_productos' %}">Cancelar</a>
+    <a href="{% url 'seller_dashboard' %}">Cancelar</a>
 </form>
 </section>
 {% endblock %}

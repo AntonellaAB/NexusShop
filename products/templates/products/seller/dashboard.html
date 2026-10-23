@@ -1,0 +1,77 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block title %}Panel del Vendedor - SB Metalúrgica{% endblock %}
+
+{% block content %}
+<div class="wrap" style="padding: 40px 0;">
+    <!-- Encabezado del Panel -->
+    <div style="margin-bottom: 30px; border-bottom: 2px solid #ddd; padding-bottom: 15px;">
+        <h1 style="font-family: 'Oswald', sans-serif; font-size: 32px; color: #111; margin: 0;">PANEL DE CONTROL DEL VENDEDOR</h1>
+        <p style="color: #666; margin-top: 5px;">Hola, {{ user.first_name|default:user.username }}. Gestioná tus productos y existencias.</p>
+    </div>
+
+    <!-- Tarjetas de Resumen (KPIs) -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px;">
+        <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 5px solid #0056b3;">
+            <h3 style="margin: 0; font-size: 14px; color: #666; text-transform: uppercase;">Productos Publicados</h3>
+            <p style="margin: 10px 0 0 0; font-size: 28px; font-weight: bold; color: #111;">{{ total_productos }}</p>
+        </div>
+        <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 5px solid #28a745;">
+            <h3 style="margin: 0; font-size: 14px; color: #666; text-transform: uppercase;">Unidades en Stock</h3>
+            <p style="margin: 10px 0 0 0; font-size: 28px; font-weight: bold; color: #111;">{{ total_unidades }}</p>
+        </div>
+        <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 5px solid #ffc107;">
+            <h3 style="margin: 0; font-size: 14px; color: #666; text-transform: uppercase;">Productos Sin Stock</h3>
+            <p style="margin: 10px 0 0 0; font-size: 28px; font-weight: bold; color: #111;">{{ sin_stock }}</p>
+        </div>
+    </div>
+
+    <!-- Tabla de Productos -->
+    <div style="background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="font-family: 'Oswald', sans-serif; font-size: 22px; margin: 0;">Mis Productos</h2>
+            <a href="{% url 'producto_crear' %}" style="background: #111; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: 500; font-size: 14px;">+ Cargar Nuevo Producto</a>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                    <th style="padding: 12px;">Producto</th>
+                    <th style="padding: 12px;">Categoría</th>
+                    <th style="padding: 12px;">Precio</th>
+                    <th style="padding: 12px;">Stock</th>
+                    <th style="padding: 12px;">Estado</th>
+                    <th style="padding: 12px;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in productos %}
+                <tr style="border-bottom: 1px solid #dee2e6;">
+                    <td style="padding: 12px; font-weight: 500;">{{ p.nombre }}</td>
+                    <td style="padding: 12px; color: #666;">{{ p.categoria.nombre|default:"Sin categoría" }}</td>
+                    <td style="padding: 12px; font-weight: bold;">Gs. {{ p.precio|floatformat:"0g" }}</td>
+                    <td style="padding: 12px;">{{ p.existencias }} unidades</td>
+                    <td style="padding: 12px;">
+                        {% if p.existencias > 0 %}
+                            <span style="background: #d4edda; color: #155724; padding: 4px 8px; border-radius: 4px; font-size: 12px;">Activo</span>
+                        {% else %}
+                            <span style="background: #f8d7da; color: #721c24; padding: 4px 8px; border-radius: 4px; font-size: 12px;">Sin stock</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 12px; font-size: 14px;">
+                        <a href="{% url 'producto_editar' p.pk %}">Editar</a> |
+                        <a href="{% url 'producto_stock' p.pk %}">Stock</a> |
+                        <a href="{% url 'producto_eliminar' p.pk %}" style="color: #c0392b;">Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="padding: 20px; text-align: center; color: #666;">Todavía no publicaste productos.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

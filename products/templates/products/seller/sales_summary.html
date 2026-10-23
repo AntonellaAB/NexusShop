@@ -1,0 +1,56 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block title %}Resumen de ventas · SB Metalúrgica{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'products/css/seller.css' %}">
+<section class="seller-page">
+  <div class="wrap">
+    {# TODO: reemplazar el href fijo por la url del panel (Giova) #}
+    <a class="seller-back" href="/products/seller/dashboard/">← Volver al panel</a>
+    <h1>Resumen de ventas</h1>
+
+    {# El período viaja por GET (?periodo=dia|semana|mes); la vista filtra los pedidos con ese valor #}
+    <div class="seller-periods" role="group" aria-label="Período">
+      <a href="?periodo=dia"{% if periodo != 'semana' and periodo != 'mes' %} class="is-active" aria-current="true"{% endif %}>Día</a>
+      <a href="?periodo=semana"{% if periodo == 'semana' %} class="is-active" aria-current="true"{% endif %}>Semana</a>
+      <a href="?periodo=mes"{% if periodo == 'mes' %} class="is-active" aria-current="true"{% endif %}>Mes</a>
+    </div>
+    <p class="seller-range">{% if periodo == 'semana' %}Esta semana{% elif periodo == 'mes' %}Este mes{% else %}Hoy{% endif %}{% if fecha_desde %} · {% if fecha_desde == fecha_hasta %}{{ fecha_desde|date:"d/m/Y" }}{% else %}{{ fecha_desde|date:"d/m/Y" }} al {{ fecha_hasta|date:"d/m/Y" }}{% endif %}{% endif %}</p>
+
+    <div class="seller-stats">
+      <div class="seller-stat">
+        <span class="seller-stat__label">Total vendido</span>
+        <span class="seller-stat__value">Gs. {{ total_vendido|default:0|floatformat:"0g" }}</span>
+      </div>
+      <div class="seller-stat">
+        <span class="seller-stat__label">Unidades vendidas</span>
+        <span class="seller-stat__value">{{ unidades_vendidas|default:0 }}</span>
+      </div>
+      <div class="seller-stat">
+        <span class="seller-stat__label">Pedidos</span>
+        <span class="seller-stat__value">{{ cantidad_pedidos|default:0 }}</span>
+      </div>
+    </div>
+
+    <div class="seller-table-wrap">
+      <table class="seller-table">
+        <thead>
+          <tr><th>Producto</th><th>Unidades</th><th>Total</th></tr>
+        </thead>
+        <tbody>
+          {% for venta in ventas_por_producto %}
+            <tr>
+              <td>{{ venta.nombre }}</td>
+              <td>{{ venta.unidades }}</td>
+              <td>Gs. {{ venta.total|floatformat:"0g" }}</td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="3" class="seller-muted">No hay ventas en este período.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}

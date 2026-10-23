@@ -1,0 +1,43 @@
+/* Panel de vendedor: stock, eliminar y resumen de ventas. Usa las variables de style.css */
+.seller-page h1{ margin: 18px 0 22px; color: var(--navy); }
+.seller-page{ padding-bottom: 60px; }
+.seller-back{ display:inline-block; margin-top: 24px; color: var(--navy-3); font-weight:600; font-size:14px; }
+.seller-back:hover{ color: var(--gold-dim); }
+.seller-muted{ color: var(--steel); font-size: 14px; }
+
+.seller-card{ max-width: 480px; background:#fff; border:1px solid #e7e5df; border-radius:10px; padding:28px; box-shadow:0 2px 10px rgba(10,23,48,.07); }
+.seller-card--danger{ border-color: var(--sale); }
+.seller-product{ font-size:18px; font-weight:700; color: var(--navy); margin-bottom:4px; }
+.seller-card label{ display:block; margin:18px 0 6px; font-size:13px; font-weight:600; color: var(--navy); }
+.seller-card input[type="number"]{ width:100%; padding:11px 12px; border:1px solid #d9d6cd; border-radius:6px; background: var(--paper); font:inherit; font-size:15px; }
+.seller-card input:focus{ outline:none; border-color: var(--gold-dim); box-shadow:0 0 0 3px rgba(242,181,55,.25); }
+.seller-card .errorlist{ list-style:none; color: var(--sale); font-size:13px; margin-top:6px; }
+.seller-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+
+.seller-btn{ display:inline-block; background: var(--navy); color:#fff; border:1px solid var(--navy); border-radius:6px; padding:10px 18px; font-size:14px; font-weight:600; cursor:pointer; }
+.seller-btn:hover{ background: var(--navy-3); }
+.seller-btn--ghost{ background:transparent; color: var(--navy); border-color: var(--steel); }
+.seller-btn--ghost:hover{ background: var(--paper); }
+.seller-btn--danger{ background: var(--sale); border-color: var(--sale); }
+.seller-btn--danger:hover{ filter: brightness(.92); background: var(--sale); }
+.seller-btn:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
+
+.seller-stats{ display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; margin-bottom:28px; }
+.seller-stat{ background:#fff; border:1px solid #e7e5df; border-top:3px solid var(--gold); border-radius:8px; padding:20px; display:flex; flex-direction:column; gap:6px; }
+.seller-stat__label{ font-size:12px; text-transform:uppercase; letter-spacing:.6px; color: var(--steel); }
+.seller-stat__value{ font-family: var(--font-display); font-size:28px; color: var(--navy); }
+
+.seller-table-wrap{ overflow-x:auto; background:#fff; border:1px solid #e7e5df; border-radius:8px; }
+.seller-table{ width:100%; border-collapse:collapse; font-size:14px; }
+.seller-table th, .seller-table td{ padding:12px 16px; text-align:left; border-bottom:1px solid #eee; }
+.seller-table th{ background: var(--paper); color: var(--navy); font-size:12px; text-transform:uppercase; letter-spacing:.5px; }
+@media (max-width: 700px){ .seller-stats{ grid-template-columns: 1fr; } }
+
+/* Selector de período (día / semana / mes) */
+.seller-periods{ display:inline-flex; border:1px solid var(--steel-light); border-radius:8px; overflow:hidden; background:#fff; margin-bottom:12px; }
+.seller-periods a{ padding:9px 22px; font-size:14px; font-weight:600; color: var(--navy); border-right:1px solid var(--steel-light); }
+.seller-periods a:last-child{ border-right:0; }
+.seller-periods a:hover{ background: var(--paper); }
+.seller-periods a.is-active{ background: var(--navy); color:#fff; }
+.seller-periods a:focus-visible{ outline:2px solid var(--gold); outline-offset:-2px; }
+.seller-range{ color: var(--steel); font-size:14px; margin-bottom:22px; }

@@ -1,0 +1,54 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block title %}Carrito · SB Metalúrgica{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'products/css/catalog.css' %}">
+<section class="cart">
+  <div class="wrap">
+    <h1>Tu carrito</h1>
+
+    {% if cart|length %}
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart %}
+            <tr>
+              <td>{{ item.product.nombre }}</td>
+              <td>Gs. {{ item.price|floatformat:"0g" }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>Gs. {{ item.total_price|floatformat:"0g" }}</td>
+              <td>
+                {# TODO: action="#" -> url de quitar del carrito; el id del producto es item.product.id (Vicente) #}
+                <form method="post" action="{% url 'cart_remove' item.product.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn-link">Quitar</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="cart-summary">
+        <p class="cart-total">Total: <strong>Gs. {{ cart.get_total_price|floatformat:"0g" }}</strong></p>
+        {# TODO: href="#" -> url de order_create (formulario de envío y pago) #}
+        <span class="btn" style="opacity:.5; cursor:not-allowed;">Finalizar compra (próximamente)</span>
+      </div>
+
+    {% else %}
+      <p class="empty">Tu carrito está vacío.</p>
+      {# TODO: href="#" -> url del catálogo #}
+      <a class="btn" href="{% url 'catalogo' %}">Ver el catálogo</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block title %}{{ producto.nombre }} · SB Metalúrgica{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'products/css/catalog.css' %}">
+<section class="product-detail">
+  <div class="wrap">
+
+    {# TODO: href="#" -> url del catálogo #}
+    <a class="btn-volver" href="{% url 'catalogo' %}">Volver al catálogo</a>
+
+    <div class="product-detail__layout">
+      <div class="product-detail__img">
+        {% if producto.imagen %}
+          <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+        {% else %}
+          <div class="product-card__noimg">Sin imagen</div>
+        {% endif %}
+      </div>
+
+      <div class="product-detail__info">
+        <h1>{{ producto.nombre }}</h1>
+        <p class="product-detail__meta">
+          {% if producto.categoria %}{{ producto.categoria.nombre }} · {% endif %}Vendido por {{ producto.vendedor }}
+        </p>
+        <p class="price price--big">Gs. {{ producto.precio|floatformat:"0g" }}</p>
+
+        {% if producto.descripcion %}
+          <div class="product-detail__desc">{{ producto.descripcion|linebreaks }}</div>
+        {% endif %}
+
+        {% if producto.existencias > 0 %}
+          <p class="stock">{{ producto.existencias }} disponibles</p>
+          {# TODO: action="#" -> url de agregar al carrito (la define Vicente) #}
+          <form method="post" action="{% url 'cart_add' producto.id %}" class="add-form">
+            {% csrf_token %}
+            <label for="quantity">Cantidad</label>
+            <input id="quantity" type="number" name="quantity" value="1" min="1" max="{{ producto.existencias }}">
+            <button type="submit" class="btn">Agregar al carrito</button>
+          </form>
+        {% else %}
+          <p class="out-of-stock">Sin stock por el momento</p>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

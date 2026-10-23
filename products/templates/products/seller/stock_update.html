@@ -1,0 +1,31 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block title %}Actualizar stock · SB Metalúrgica{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'products/css/seller.css' %}">
+<section class="seller-page">
+  <div class="wrap">
+    {# TODO: reemplazar el href fijo por la url del panel (Giova) #}
+    <a class="seller-back" href="/products/seller/dashboard/">← Volver al panel</a>
+    <h1>Actualizar stock</h1>
+
+    <div class="seller-card">
+      <p class="seller-product">{{ producto.nombre }}</p>
+      <p class="seller-muted">Stock actual: <strong>{{ producto.existencias }}</strong> unidades</p>
+
+      <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <label for="{{ form.existencias.id_for_label }}">Nuevo stock</label>
+        {{ form.existencias }}
+        {{ form.existencias.errors }}
+        <div class="seller-actions">
+          <button type="submit" class="seller-btn">Guardar stock</button>
+          <a class="seller-btn seller-btn--ghost" href="/products/seller/dashboard/">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

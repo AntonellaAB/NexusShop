@@ -8,7 +8,7 @@
   <div class="wrap">
 
     {# TODO: href="#" -> url del catálogo #}
-    <a class="btn-volver" href="#">Volver al catálogo</a>
+    <a class="btn-volver" href="{% url 'catalogo' %}">Volver al catálogo</a>
 
     <div class="product-detail__layout">
       <div class="product-detail__img">
@@ -33,7 +33,7 @@
         {% if producto.existencias > 0 %}
           <p class="stock">{{ producto.existencias }} disponibles</p>
           {# TODO: action="#" -> url de agregar al carrito (la define Vicente) #}
-          <form method="post" action="#" class="add-form">
+          <form method="post" action="{% url 'cart_add' producto.id %}" class="add-form">
             {% csrf_token %}
             <label for="quantity">Cantidad</label>
             <input id="quantity" type="number" name="quantity" value="1" min="1" max="{{ producto.existencias }}">

@@ -13,3 +13,11 @@ __pycache__/
 # Configuración del editor/IDE
 .vscode/
 .idea/
+
+
+# Archivos subidos por usuarios
+media/
+
+# Archivos temporales
+codigo.txt
+revision.txt
